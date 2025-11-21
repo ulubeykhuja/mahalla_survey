@@ -10,12 +10,11 @@ export async function POST(req: Request) {
 
         if (body.message && body.message.text === '/start') {
             const chatId = body.message.chat.id;
-            await bot.sendMessage(chatId, 'Assalomu alaykum! Mahalla so\'rovnoma tizimiga xush kelibsiz.', {
+            await bot.sendMessage(chatId, 'Assalomu alaykum! Mahalla so\'rovnoma tizimiga xush kelibsiz.\n\nQuyidagi tugmani bosib, ilovani oching:', {
                 reply_markup: {
-                    keyboard: [
-                        [{ text: "So'rovnomani ochish", web_app: { url: 'https://mahalla-survey.vercel.app' } }]
-                    ],
-                    resize_keyboard: true
+                    inline_keyboard: [
+                        [{ text: "📋 So'rovnomani ochish", web_app: { url: 'https://mahalla-survey.vercel.app' } }]
+                    ]
                 }
             });
         }
