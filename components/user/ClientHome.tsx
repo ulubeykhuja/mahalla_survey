@@ -34,16 +34,6 @@ export default function ClientHome() {
             <div className="p-6 text-center">
                 <h1 className="text-xl font-bold mb-2">Xush kelibsiz!</h1>
                 <p className="text-gray-600">Iltimos, bu ilovani Telegram orqali oching.</p>
-                {/* Dev Login for testing */}
-                <div className="mt-8 p-4 border rounded bg-yellow-50">
-                    <p className="text-xs text-yellow-800 mb-2">Developer Mode</p>
-                    <button
-                        onClick={() => window.location.reload()} // In real dev, we'd mock the context
-                        className="text-sm bg-yellow-200 px-3 py-1 rounded"
-                    >
-                        Qayta yuklash
-                    </button>
-                </div>
             </div>
         );
     }
