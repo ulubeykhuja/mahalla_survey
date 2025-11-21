@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String        @id @default(uuid())
+  telegramId      BigInt        @unique
+  fullName        String?
+  phone           String?
+  balance         Int           @default(0)
+  registrationData String?      // JSON string of other fields
+  joinedAt        DateTime      @default(now())
+  transactions    Transaction[]
+}
+
+model SurveyLink {
+  id           String   @id @default(uuid())
+  title        String
+  description  String?
+  koboUrl      String
+  pointsReward Int      @default(5)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
+model Transaction {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  amount    Int
+  type      String   // REGISTRATION, SURVEY_REWARD, PAYOUT
+  adminId   String?  // If manually awarded
+  createdAt DateTime @default(now())
+}
+
+model RegistrationField {
+  id          String  @id @default(uuid())
+  label       String
+  type        String  // text, number, select
+  options     String? // JSON string for select options
+  order       Int     @default(0)
+  isRequired  Boolean @default(true)
+  dependsOnFieldId String? // ID of the field this depends on
+  dependsOnValue   String? // Value that triggers this field
+}
