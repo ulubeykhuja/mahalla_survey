@@ -28,7 +28,7 @@ export function TelegramProvider({ children }: { children: React.ReactNode }) {
 
             if (tg.initDataUnsafe?.user) {
                 setUser(tg.initDataUnsafe.user);
-            } else {
+            } else if (process.env.NODE_ENV === 'development') {
                 // Dev mode fallback
                 console.log('Not in Telegram, using mock user');
                 setUser({ id: 123456789, first_name: 'Test', last_name: 'User' });
