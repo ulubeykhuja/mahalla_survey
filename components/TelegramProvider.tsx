@@ -26,13 +26,24 @@ export function TelegramProvider({ children }: { children: React.ReactNode }) {
             const tg = (window as any).Telegram.WebApp;
             tg.ready();
 
+            // Debug logging
+            console.log('Telegram WebApp detected');
+            console.log('initData:', tg.initData);
+            console.log('initDataUnsafe:', tg.initDataUnsafe);
+            console.log('User:', tg.initDataUnsafe?.user);
+
             if (tg.initDataUnsafe?.user) {
+                console.log('Setting user from Telegram:', tg.initDataUnsafe.user);
                 setUser(tg.initDataUnsafe.user);
             } else if (process.env.NODE_ENV === 'development') {
                 // Dev mode fallback
                 console.log('Not in Telegram, using mock user');
                 setUser({ id: 123456789, first_name: 'Test', last_name: 'User' });
+            } else {
+                console.log('No user data from Telegram in production');
             }
+        } else {
+            console.log('Telegram WebApp not detected');
         }
         setIsLoading(false);
     }, []);
